@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 
@@ -10,9 +11,11 @@ import (
 
 func main() {
 	scanner := bufio.NewScanner(os.Stdin)
-
+	fmt.Println("Scanning in data now")
 	for scanner.Scan() {
-		domain.CheckDomain(scanner.Text())
+		if err := domain.CheckDomain(scanner.Text()); err != nil {
+			log.Printf("invalid domain: %s", err)
+		}
 	}
 
 	if err := scanner.Err(); err != nil {
